@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Module07DataAccess.ViewModel"
+             x:Class="Module07DataAccess.View.ViewEmployee"
+             Shell.NavBarIsVisible="False"
+             Shell.BackgroundColor="Black"
+             Title="View Employee">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10" Spacing="5">
+
+            <Label Text="Employee Information"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#FFFFFF"/>
+
+            <Frame BorderColor="Gray" CornerRadius="8" Padding="5" BackgroundColor="#1E1E1E">
+                <ListView ItemsSource="{Binding EmployeeList}" 
+                          SelectedItem="{Binding SelectedEmployee}"
+                          SeparatorColor="Gray" 
+                          HasUnevenRows="True" 
+                          HeightRequest="200">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame Padding="5" Margin="3" BackgroundColor="#2A2A2A" CornerRadius="6">
+                                    <StackLayout>
+                                        <Label Text="{Binding Name}" 
+                                               TextColor="LightBlue" 
+                                               FontSize="16"/>
+                                        <Label Text="{Binding Address}" 
+                                               TextColor="LightCoral" 
+                                               FontSize="12"/>
+                                        <Label Text="{Binding Email}" 
+                                               TextColor="LightCoral" 
+                                               FontSize="12"/>
+                                        <Label Text="{Binding ContactNo}" 
+                                               TextColor="LightGreen" 
+                                               FontSize="12"/>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:EmployeeViewModel}}, Path=SelectedEmployeeCommand}"
+                                                CommandParameter="{Binding .}"/>
+                                        </StackLayout.GestureRecognizers>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Frame>
+
+            <Button Text="Load Data" 
+                    Command="{Binding LoadDataCommand}" 
+                    BackgroundColor="#FF5722" 
+                    TextColor="White"
+                    CornerRadius="5"
+                    Padding="10"/>
+
+            <Label Text="Add New Employee" 
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="White"/>
+
+            <Frame BackgroundColor="#1E1E1E" Padding="10" CornerRadius="8">
+                <StackLayout Spacing="5">
+                    <Entry Placeholder="Name" 
+                           Text="{Binding NewEmployeeName}" 
+                           PlaceholderColor="Gray"
+                           TextColor="White"/>
+                    <Entry Placeholder="Address" 
+                           Text="{Binding NewEmployeeAddress}" 
+                           PlaceholderColor="Gray"
+                           TextColor="White"/>
+                    <Entry Placeholder="Email" 
+                       Text="{Binding NewEmployeeEmail}" 
+                       PlaceholderColor="Gray"
+                       TextColor="White"/>
+                    <Entry Placeholder="Contact No" 
+                           Text="{Binding NewEmployeeContactNo}" 
+                           PlaceholderColor="Gray"
+                           TextColor="White"/>
+                </StackLayout>
+            </Frame>
+
+            <Button Text="Add Employee" 
+                    Command="{Binding AddEmployeeCommand}" 
+                    BackgroundColor="#4CAF50" 
+                    TextColor="White" 
+                    CornerRadius="5"
+                    Padding="10"
+                    HorizontalOptions="Center"/>
+
+            <Button Text="Delete Employee" 
+                    Command="{Binding DeleteEmployeeCommand}" 
+                    IsEnabled="{Binding IsEmployeeSelected}"
+                    BackgroundColor="Red" 
+                    TextColor="White" 
+                    CornerRadius="5"
+                    Padding="10"
+                    HorizontalOptions="Center"/>
+
+            <Label x:Name="ConnectionStatusLabel"
+                   Text="{Binding StatusMessage}"
+                   FontSize="12"
+                   HorizontalOptions="Center"
+                   TextColor="LightGray"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
